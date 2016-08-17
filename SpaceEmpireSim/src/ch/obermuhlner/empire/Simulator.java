@@ -1,27 +1,35 @@
 package ch.obermuhlner.empire;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class Simulator {
 
 	private final Random random = new Random(1);
 	
-	private final Map map;
+	private final SpaceMap map;
+	
+	private final Map<Race, RaceCell> totalRaces = new HashMap<>();
 	
 	public Simulator(int sizeX, int sizeY) {
-		map = new Map(sizeX, sizeY, 1);
+		map = new SpaceMap(sizeX, sizeY, 1);
 		init();
 	}
 
 	private void init() {
 		for (int i = 0; i < 3; i++) {
-			initRace();
+			Race race = initRace();
+			totalRaces.put(race, new RaceCell(race));
 		}
 	}
 
 	public void simulate() {
+		clearTotalRaces();
+		
 		for (int x = 0; x < map.sizeX; x++) {
 			for (int y = 0; y < map.sizeY; y++) {
 				for (int z = 0; z < map.sizeZ; z++) {
@@ -31,6 +39,13 @@ public class Simulator {
 		}
 	}
 	
+	private void clearTotalRaces() {
+		for (RaceCell raceCell : totalRaces.values()) {
+			raceCell.army = 0;
+			raceCell.population = 0;
+		}
+	}
+
 	private void simulate(int x, int y, int z) {
 		Coord coord = new Coord(x, y, z);
 
@@ -91,9 +106,13 @@ public class Simulator {
 
 			raceCell.cleanup();
 			if (raceCell.isDead()) {
-				System.out.println("Killed " + raceCell.race.name + " " + coord); 
+				System.out.println("Destroyed " + raceCell.race.name + " " + coord); 
 				raceCellsIterator.remove();
 			}
+			
+			RaceCell total = totalRaces.get(raceCell.race);
+			total.population += raceCell.population;
+			total.army += raceCell.army;
 		}
 	}
 
@@ -141,7 +160,7 @@ public class Simulator {
 		return new Coord(nx, ny, nz);
 	}
 
-	private void initRace() {
+	private Race initRace() {
 		Race race = createRace();
 		int x = random.nextInt(map.sizeX);
 		int y = random.nextInt(map.sizeY);
@@ -152,6 +171,8 @@ public class Simulator {
 		
 		MapCell mapCell = map.get(x, y, z);
 		mapCell.raceCells.add(raceCell);
+		
+		return race;
 	}
 	
 	private Race createRace() {
@@ -208,6 +229,9 @@ public class Simulator {
 					print(x, y, z);
 				}
 			}
+		}
+		for(RaceCell total : totalRaces.values()) {
+			System.out.println("Total " + total);
 		}
 	}
 
