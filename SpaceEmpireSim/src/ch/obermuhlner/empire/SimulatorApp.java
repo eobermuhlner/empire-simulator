@@ -2,7 +2,7 @@ package ch.obermuhlner.empire;
 
 public class SimulatorApp {
 	public static void main(String[] args) {
-		Simulator simulator = new Simulator(3, 3);
+		Simulator simulator = new Simulator(3, 3, 3);
 
 		simulator.print();
 

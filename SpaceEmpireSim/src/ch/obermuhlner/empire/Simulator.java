@@ -14,13 +14,13 @@ public class Simulator {
 	
 	public final Map<Race, RaceCell> totalRaces = new HashMap<>();
 	
-	public Simulator(int sizeX, int sizeY) {
+	public Simulator(int sizeX, int sizeY, int raceCount) {
 		map = new SpaceMap(sizeX, sizeY, 1);
-		init();
+		init(raceCount);
 	}
 
-	private void init() {
-		for (int i = 0; i < 3; i++) {
+	private void init(int raceCount) {
+		for (int i = 0; i < raceCount; i++) {
 			Race race = initRace();
 			totalRaces.put(race, new RaceCell(race));
 		}
@@ -80,7 +80,7 @@ public class Simulator {
 				Coord neighbourCoord = randomNeighbour(x, y, z);
 				if (neighbourCoord != null) {
 					MapCell attackMapCell = map.get(neighbourCoord);
-					System.out.println("Move " + coord + " to " + neighbourCoord + " " + raceCell.race.name + " " + moveArmy + " army");
+					//System.out.println("Move " + coord + " to " + neighbourCoord + " " + raceCell.race.name + " " + moveArmy + " army");
 					RaceCell targetRaceCell = attackMapCell.getOrCreateRaceCell(raceCell.race);
 					targetRaceCell.army += moveArmy;
 					raceCell.army -= moveArmy;
@@ -92,7 +92,7 @@ public class Simulator {
 				Coord neighbourCoord = randomNeighbour(x, y, z);
 				if (neighbourCoord != null) {
 					MapCell colonyMapCell = map.get(neighbourCoord);
-					System.out.println("Move " + coord + " to " + neighbourCoord + " " + raceCell.race.name + " " + colonists + " colonists");
+					//System.out.println("Move " + coord + " to " + neighbourCoord + " " + raceCell.race.name + " " + colonists + " colonists");
 					RaceCell targetRaceCell = colonyMapCell.getOrCreateRaceCell(raceCell.race);
 					targetRaceCell.population += colonists;
 					raceCell.population -= colonists;				
@@ -107,7 +107,7 @@ public class Simulator {
 				double deadAttackers = raceCell.calculateDeadAttackers(attackers, defenders, random);
 				double deadDefenders = enemyRaceCell.calculateDeadDefenders(attackers, defenders, random);
 
-				System.out.println("Attack " + coord + " " + raceCell.race.name + " " + attackers + " -> " + enemyRaceCell.race.name + " " + defenders + " : deadAtt=" + deadAttackers + " deadDef=" + deadDefenders);
+				//System.out.println("Attack " + coord + " " + raceCell.race.name + " " + attackers + " -> " + enemyRaceCell.race.name + " " + defenders + " : deadAtt=" + deadAttackers + " deadDef=" + deadDefenders);
 
 				raceCell.casualties(deadAttackers);
 				enemyRaceCell.casualties(deadDefenders);
@@ -117,7 +117,7 @@ public class Simulator {
 
 			raceCell.cleanup();
 			if (raceCell.isDead()) {
-				System.out.println("Destroyed " + raceCell.race.name + " " + coord); 
+				//System.out.println("Destroyed " + raceCell.race.name + " " + coord); 
 				raceCellsIterator.remove();
 			}
 		}
@@ -192,21 +192,25 @@ public class Simulator {
 
 	private Traits createTraits() {
 		Traits traits = new Traits();
-		traits.growth = random.nextDouble() * 0.01;
-		traits.agressive = random.nextDouble();
-		traits.defensive = random.nextDouble();
-		traits.armyExpansive = random.nextDouble();
-		traits.expansive = random.nextDouble();
-		traits.warProduction = random.nextDouble();
+		traits.growth = nextDouble(random, 0.01, 0.02);
+		traits.agressive = nextDouble(random, 0.2, 0.8);
+		traits.defensive = nextDouble(random, 0.2, 0.8);
+		traits.armyExpansive = nextDouble(random, 0.2, 0.8);
+		traits.expansive = nextDouble(random, 0.2, 0.8);
+		traits.warProduction = nextDouble(random, 0.0, 0.9);
 
-		traits.growth = 0.01;
-		traits.agressive = 0.5;
-		traits.defensive = 0.5;
-		traits.armyExpansive = 0.5;
-		traits.expansive = 0.5;
-		traits.warProduction = 0.1;
+//		traits.growth = 0.01;
+//		traits.agressive = 0.5;
+//		traits.defensive = 0.5;
+//		traits.armyExpansive = 0.5;
+//		traits.expansive = 0.5;
+//		traits.warProduction = 0.1;
 
 		return traits;
+	}
+	
+	private static double nextDouble(Random random, double min, double max) {
+		return random.nextDouble() * (max - min) + min;
 	}
 
 	private static final String VOWELS = "aeiouy";
