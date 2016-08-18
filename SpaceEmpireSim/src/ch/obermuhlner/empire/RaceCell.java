@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class RaceCell {
 
-	private static final double MAX_POPULATION = 1E6;
+	private static final double MAX_POPULATION = 10000;
 
 	private static final double MAX_ARMY = MAX_POPULATION / 4;
 
@@ -24,6 +24,10 @@ public class RaceCell {
 	
 	public RaceCell(Race race) {
 		this.race = race;
+	}
+	
+	public double relativePopulation() {
+		return (population + army) / (MAX_POPULATION + MAX_ARMY);
 	}
 	
 	public void grow(double totalPopulation, double totalArmy, Random random) {

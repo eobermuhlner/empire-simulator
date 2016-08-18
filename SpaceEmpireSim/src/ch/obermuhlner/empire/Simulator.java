@@ -10,9 +10,9 @@ public class Simulator {
 
 	private final Random random = new Random(1);
 	
-	private final SpaceMap map;
+	public final SpaceMap map;
 	
-	private final Map<Race, RaceCell> totalRaces = new HashMap<>();
+	public final Map<Race, RaceCell> totalRaces = new HashMap<>();
 	
 	public Simulator(int sizeX, int sizeY) {
 		map = new SpaceMap(sizeX, sizeY, 1);
@@ -233,12 +233,36 @@ public class Simulator {
 		for (int x = 0; x < map.sizeX; x++) {
 			for (int y = 0; y < map.sizeY; y++) {
 				for (int z = 0; z < map.sizeZ; z++) {
+					printMini(x, y, z);
+				}
+			}
+			System.out.println();
+		}
+		
+		for (int x = 0; x < map.sizeX; x++) {
+			for (int y = 0; y < map.sizeY; y++) {
+				for (int z = 0; z < map.sizeZ; z++) {
 					print(x, y, z);
 				}
 			}
 		}
+		
 		for(RaceCell total : totalRaces.values()) {
 			System.out.println("Total " + total);
+		}
+	}
+
+	private void printMini(int x, int y, int z) {
+		MapCell mapCell = map.get(x, y, z);
+
+		for (Race race : totalRaces.keySet()) {
+			RaceCell raceCell = mapCell.getRaceCell(race);
+			if (raceCell != null) {
+				System.out.print(raceCell.race.name.charAt(0));
+			} else {
+				System.out.print(' ');
+			}
+			System.out.print('|');
 		}
 	}
 

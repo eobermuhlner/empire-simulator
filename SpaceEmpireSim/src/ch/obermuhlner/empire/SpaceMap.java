@@ -1,11 +1,11 @@
 package ch.obermuhlner.empire;
 
 public class SpaceMap {
-	final int sizeX;
-	final int sizeY;
-	final int sizeZ;
+	public final int sizeX;
+	public final int sizeY;
+	public final int sizeZ;
 
-	final MapCell[] cells;
+	public final MapCell[] cells;
 	
 	public SpaceMap(int sizeX, int sizeY, int sizeZ) {
 		this.sizeX = sizeX;
