@@ -63,18 +63,18 @@ public class RaceCell {
 	}
 	
 	public double calculateDeadAttackers(double attackStrength, double defenseStrength, Random random) {
-		return calculateOverwhelmCasualties(defenseStrength / attackStrength);
+		return calculateOverwhelmCasualties(defenseStrength / attackStrength) * Math.max(attackStrength, defenseStrength);
 	}
 
 	public double calculateDeadDefenders(double attackStrength, double defenseStrength, Random random) {
-		return calculateOverwhelmCasualties(attackStrength / defenseStrength);
+		return calculateOverwhelmCasualties(attackStrength / defenseStrength) * Math.max(attackStrength, defenseStrength);
 	}
 
 	private double calculateOverwhelmCasualties(double overwhelm) {
-		if (Double.isNaN(overwhelm)) {
+		if (!Double.isFinite(overwhelm)) {
 			return MAX_OVERWHELM_FACTOR;
 		}
-		return MathUtil.smoothstep(0.0, MAX_OVERWHELM_FACTOR, overwhelm * overwhelm);
+		return MathUtil.smoothstep(0.0, MAX_OVERWHELM_FACTOR, overwhelm * overwhelm * 0.25);
 	}
 	
 	public void casualties(double casualties) {
