@@ -199,7 +199,7 @@ public class Simulator {
 		traits.expansive = random.nextDouble();
 		traits.warProduction = random.nextDouble();
 
-		traits.growth = 0.005;
+		traits.growth = 0.01;
 		traits.agressive = 0.5;
 		traits.defensive = 0.5;
 		traits.armyExpansive = 0.5;
