@@ -1,6 +1,5 @@
 package ch.obermuhlner.empire;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -37,12 +36,24 @@ public class Simulator {
 				}
 			}
 		}
-	}
+
+		for(MapCell mapCell : map.cells) {
+			countTotalRaces(mapCell);
+		}
+}
 	
 	private void clearTotalRaces() {
 		for (RaceCell raceCell : totalRaces.values()) {
 			raceCell.army = 0;
 			raceCell.population = 0;
+		}
+	}
+
+	private void countTotalRaces(MapCell mapCell) {
+		for (RaceCell raceCell : mapCell.raceCells) {
+			RaceCell total = totalRaces.get(raceCell.race);
+			total.population += raceCell.population;
+			total.army += raceCell.army;
 		}
 	}
 
@@ -109,10 +120,6 @@ public class Simulator {
 				System.out.println("Destroyed " + raceCell.race.name + " " + coord); 
 				raceCellsIterator.remove();
 			}
-			
-			RaceCell total = totalRaces.get(raceCell.race);
-			total.population += raceCell.population;
-			total.army += raceCell.army;
 		}
 	}
 
