@@ -1,6 +1,7 @@
 package ch.obermuhlner.empire;
 
 import java.util.Map;
+import java.util.Random;
 import java.util.HashMap;
 
 public class Race {
@@ -16,10 +17,11 @@ public class Race {
 		this.traits = traits;
 	}
 	
-	public Relationship getRelationShip(Race otherRace) {
+	public Relationship getRelationShip(Race otherRace, Random random) {
 		Relationship relationship = relationShips.get(otherRace);
 		if (relationship == null) {
-			relationship = Relationship.War;
+			Relationship[] values = Relationship.values();
+			relationship = values[random.nextInt(values.length)];
 			relationShips.put(otherRace, relationship);
 		}
 		

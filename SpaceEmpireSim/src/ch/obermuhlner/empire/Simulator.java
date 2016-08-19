@@ -133,7 +133,7 @@ public class Simulator {
 			int index = (i + offset) % n;
 			RaceCell enemyCell = raceCells.get(index);
 			if (enemyCell != raceCell) {
-				if (raceCell.race.getRelationShip(enemyCell.race) == Relationship.War) {
+				if (raceCell.race.getRelationShip(enemyCell.race, random) == Relationship.War) {
 					return enemyCell;
 				}
 			}

@@ -35,8 +35,8 @@ public class SimulatorUiApp extends Application {
 	private int cellWidth = 4;
 	private int cellHeight = 4;
 	private int mapSize = 150;
-	private int raceCount = 200;
-
+	private int raceCount = 100;
+	
 	private Simulator simulator;
 	private Map<Race, Color> raceColors;
 
@@ -46,7 +46,7 @@ public class SimulatorUiApp extends Application {
 		initSimulator();
 		
 		Group root = new Group();
-		Scene scene = new Scene(root, 800, 600, Color.BLACK);
+		Scene scene = new Scene(root, 800, 800, Color.BLACK);
 
 		Canvas canvas = new Canvas(simulator.map.sizeX * cellWidth, simulator.map.sizeY * cellWidth);
 		GraphicsContext graphics = canvas.getGraphicsContext2D();
