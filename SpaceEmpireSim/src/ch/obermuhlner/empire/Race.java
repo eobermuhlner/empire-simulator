@@ -20,8 +20,7 @@ public class Race {
 	public Relationship getRelationShip(Race otherRace, Random random) {
 		Relationship relationship = relationShips.get(otherRace);
 		if (relationship == null) {
-			Relationship[] values = Relationship.values();
-			relationship = values[random.nextInt(values.length)];
+			relationship = RandomUtil.next(random, Relationship.values());
 			relationShips.put(otherRace, relationship);
 		}
 		
