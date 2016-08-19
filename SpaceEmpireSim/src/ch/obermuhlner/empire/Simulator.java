@@ -197,8 +197,8 @@ public class Simulator {
 		traits.growth = RandomUtil.nextDouble(random, 0.01, 0.02);
 		traits.agressive = RandomUtil.nextDouble(random, 0.2, 0.8);
 		traits.defensive = RandomUtil.nextDouble(random, 0.2, 0.8);
-		traits.armyExpansive = RandomUtil.nextDouble(random, 0.2, 0.8);
-		traits.expansive = RandomUtil.nextDouble(random, 0.2, 0.8);
+		traits.armyExpansive = RandomUtil.nextDouble(random, 0.01, 0.3);
+		traits.expansive = RandomUtil.nextDouble(random, 0.01, 0.3);
 		traits.warProduction = RandomUtil.nextDouble(random, 0.0, 0.9);
 
 //		traits.growth = 0.01;
