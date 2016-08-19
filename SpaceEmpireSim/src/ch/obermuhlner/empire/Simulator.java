@@ -113,6 +113,8 @@ public class Simulator {
 				enemyRaceCell.casualties(deadDefenders);
 				
 				enemyRaceCell.cleanup();
+				
+				enemyRaceCell.race.relationShips.put(raceCell.race, Relationship.War);
 			}
 
 			raceCell.cleanup();
@@ -192,12 +194,12 @@ public class Simulator {
 
 	private Traits createTraits() {
 		Traits traits = new Traits();
-		traits.growth = nextDouble(random, 0.01, 0.02);
-		traits.agressive = nextDouble(random, 0.2, 0.8);
-		traits.defensive = nextDouble(random, 0.2, 0.8);
-		traits.armyExpansive = nextDouble(random, 0.2, 0.8);
-		traits.expansive = nextDouble(random, 0.2, 0.8);
-		traits.warProduction = nextDouble(random, 0.0, 0.9);
+		traits.growth = RandomUtil.nextDouble(random, 0.01, 0.02);
+		traits.agressive = RandomUtil.nextDouble(random, 0.2, 0.8);
+		traits.defensive = RandomUtil.nextDouble(random, 0.2, 0.8);
+		traits.armyExpansive = RandomUtil.nextDouble(random, 0.2, 0.8);
+		traits.expansive = RandomUtil.nextDouble(random, 0.2, 0.8);
+		traits.warProduction = RandomUtil.nextDouble(random, 0.0, 0.9);
 
 //		traits.growth = 0.01;
 //		traits.agressive = 0.5;
@@ -209,10 +211,6 @@ public class Simulator {
 		return traits;
 	}
 	
-	private static double nextDouble(Random random, double min, double max) {
-		return random.nextDouble() * (max - min) + min;
-	}
-
 	private static final String VOWELS = "aeiouy";
 	private static final String CONSONANTS = "bcdfghjklmnpqrstvwxz";
 	
