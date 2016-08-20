@@ -102,7 +102,7 @@ public class SimulatorUiApp extends Application {
 				Color color = Color.BLACK;
 				for(RaceCell raceCell : mapCell.raceCells) {
 					double value = raceCell.relativePopulation();
-					value = value * 0.7 + 0.3;
+					value = value * 0.8 + 0.2;
 					color = color.interpolate(raceColors.get(raceCell.race), value);
 				}
 				if (color != null) {
