@@ -8,11 +8,13 @@ import java.util.Random;
 
 public class Simulator {
 
-	private final Random random = new Random(1);
+	private final Random random = new Random();
 	
 	public final SpaceMap map;
 	
 	public final Map<Race, RaceCell> totalRaces = new HashMap<>();
+	
+	public int count;
 	
 	public Simulator(int sizeX, int sizeY, int raceCount) {
 		map = new SpaceMap(sizeX, sizeY, 1);
@@ -27,6 +29,9 @@ public class Simulator {
 	}
 
 	public void simulate() {
+		count++;
+		
+		modifyRaceAttributes();
 		clearTotalRaces();
 		
 		for (int x = 0; x < map.sizeX; x++) {
@@ -42,6 +47,14 @@ public class Simulator {
 		}
 }
 	
+	private void modifyRaceAttributes() {
+		for (RaceCell raceCell : totalRaces.values()) {
+			raceCell.race.traits.randomWalk(random);
+//			raceCell.race.traits.setRelativePopulation(totalRaces.get(raceCell.race).getTotalPopulation() / RaceCell.MAX_TOTAL_POPULATION / 20);
+//			raceCell.race.traits.setRelativePopulation(Math.sin((raceCell.race.name.hashCode() % 10000 + count) / 1000.0) * 0.5 + 0.5);
+		}
+	}
+
 	private void clearTotalRaces() {
 		for (RaceCell raceCell : totalRaces.values()) {
 			raceCell.army = 0;
@@ -194,12 +207,12 @@ public class Simulator {
 
 	private Traits createTraits() {
 		Traits traits = new Traits();
-		traits.growth = RandomUtil.nextDouble(random, 0.01, 0.02);
-		traits.agressive = RandomUtil.nextDouble(random, 0.2, 0.8);
-		traits.defensive = RandomUtil.nextDouble(random, 0.2, 0.8);
-		traits.armyExpansive = RandomUtil.nextDouble(random, 0.01, 0.3);
-		traits.expansive = RandomUtil.nextDouble(random, 0.01, 0.3);
-		traits.warProduction = RandomUtil.nextDouble(random, 0.0, 0.9);
+		traits.growth = RangeValue.of(random, 0.01, 0.03);
+		traits.agressive = RangeValue.of(random, 0.2, 0.8);
+		traits.defensive = RangeValue.of(random, 0.2, 0.8);
+		traits.armyExpansive = RangeValue.of(random, 0.01, 0.3);
+		traits.expansive = RangeValue.of(random, 0.01, 0.3);
+		traits.warProduction = RangeValue.of(random, 0.0, 0.9);
 
 //		traits.growth = 0.01;
 //		traits.agressive = 0.5;

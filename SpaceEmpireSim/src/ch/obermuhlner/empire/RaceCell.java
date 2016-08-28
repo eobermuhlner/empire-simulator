@@ -8,6 +8,8 @@ public class RaceCell {
 
 	private static final double MAX_ARMY = MAX_POPULATION / 4;
 
+	public static final double MAX_TOTAL_POPULATION = MAX_POPULATION + MAX_ARMY;
+
 	private static final double CIVILIAN_COLLATERAL_CASUALTIES_FACTOR = 0.6;
 	
 	private static final double CIVILIAN_HEAVY_CASUALTIES_FACTOR = 10.0;
@@ -26,6 +28,10 @@ public class RaceCell {
 		this.race = race;
 	}
 	
+	public double getTotalPopulation() {
+		return population + army;
+	}
+	
 	public double relativePopulation() {
 		return (population + army) / (MAX_POPULATION + MAX_ARMY);
 	}
@@ -35,8 +41,8 @@ public class RaceCell {
 		double available = (MAX_POPULATION + MAX_ARMY) - total;
 		available = available / total * (population + army);
 		
-		double populationGrowth = MathUtil.clamp(population * race.traits.growth, 0, available);
-		double armyGrowth = populationGrowth * race.traits.warProduction;
+		double populationGrowth = MathUtil.clamp(population * race.traits.growth.value, 0, available);
+		double armyGrowth = populationGrowth * race.traits.warProduction.value;
 		populationGrowth -= armyGrowth;
 		
 		population += populationGrowth;
@@ -47,22 +53,22 @@ public class RaceCell {
 	}
 
 	public double calculateMoveArmy(Random random) {
-		double attackArmy = army * race.traits.armyExpansive;
+		double attackArmy = army * race.traits.armyExpansive.value;
 		return attackArmy;
 	}
 
 	public double calculateColonists(Random random) {
-		double colonists = population * race.traits.expansive;
+		double colonists = population * race.traits.expansive.value;
 		return colonists;
 	}
 	
 	public double calculateAttackStrength(Random random) {
-		double attackers = army * race.traits.agressive;
+		double attackers = army * race.traits.agressive.value;
 		return attackers;
 	}
 
 	public double calculateDefenseStrength(Random random) {
-		double defenders = army * race.traits.defensive;
+		double defenders = army * race.traits.defensive.value;
 		return defenders;
 	}
 	

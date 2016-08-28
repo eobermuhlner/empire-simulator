@@ -1,7 +1,7 @@
 package ch.obermuhlner.empire;
 
 public enum Relationship {
-	Peace,
+//	Peace,
 	War,
 //	Ally
 }
