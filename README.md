@@ -12,3 +12,4 @@ The following screenshots show three stages of the simulated empires.
 
 ![Screenshot #3](https://raw.githubusercontent.com/eobermuhlner/empire-simulator/master/SpaceEmpireSim/docu/screenshots/empires_03.png)
 
+![Screenshot #3](https://raw.githubusercontent.com/eobermuhlner/empire-simulator/master/SpaceEmpireSim/docu/screenshots/empires_04.png)
